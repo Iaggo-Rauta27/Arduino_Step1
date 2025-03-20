@@ -1,0 +1,27 @@
+#include "DHT.h"
+
+#define DHTPIN A1 // Pin connected to the sensor
+#define DHTTYPE DHT11 // DHT 11 sensor type
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup(){
+  Serial.begin(9600);
+  Serial.println("Teste do DHT11");
+  dht.begin();
+}
+
+void loop(){
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+  // Check if the readings are valid, otherwise display an error.
+  if (isnan(t) || isnan(h)){
+    Serial.println("Falhou na leitura do sensor DHT");
+  } else {
+    Serial.print("Umidade: ");
+    Serial.print(h);
+    Serial.print(" \t");
+    Serial.print("Temperatura: ");
+    Serial.print(t);
+    Serial.println(" °C");
+  }
+}
